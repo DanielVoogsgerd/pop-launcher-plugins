@@ -24,3 +24,6 @@ serde = { version = "1", features = ["derive"] }
 xdg = "2.4.1"
 merge = "0.1.0"
 async-trait = "0.1.66"
+shlex = "1.1.0"
+toml = "0.7.2"
+home = "0.5.5"
