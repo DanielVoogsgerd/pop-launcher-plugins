@@ -1,7 +1,11 @@
+use std::{fs::read_to_string, iter::once, path::PathBuf};
+
 use async_trait::async_trait;
 use futures_lite::AsyncWriteExt;
 use log::warn;
+use merge::Merge;
 use pop_launcher::{async_stdout, PluginResponse, Request};
+use serde::Deserialize;
 
 pub struct Responder {
     output: blocking::Unblock<std::io::Stdout>,
@@ -64,4 +68,36 @@ pub trait PopLauncherPlugin {
             Request::Quit(id) => self.quit(id).await,
         }
     }
+}
+
+pub fn get_config<Config>(files: &[PathBuf]) -> Config
+where
+    Config: Default + Merge + for<'a> Deserialize<'a>,
+{
+    let mut config = Config::default();
+
+    for path in files {
+        if let Ok(data) = read_to_string(path) {
+            if let Ok(conf) = ron::from_str::<Config>(&data) {
+                config.merge(conf);
+            }
+        }
+    }
+
+    config
+}
+
+pub fn get_config_files(plugin_name: &str) -> anyhow::Result<Vec<PathBuf>> {
+    let xdg = xdg::BaseDirectories::with_prefix("pop-launcher")?;
+    let home = xdg.get_data_home();
+    let dirs = xdg.get_data_dirs();
+
+    Ok(dirs
+        .into_iter()
+        .chain(once(home))
+        .filter_map(|dir| {
+            let plugin_config = dir.join("plugins").join(plugin_name).join("config.ron");
+            plugin_config.exists().then_some(plugin_config)
+        })
+        .collect())
 }
