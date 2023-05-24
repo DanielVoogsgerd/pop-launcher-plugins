@@ -24,7 +24,7 @@ impl Responder {
         }
     }
 
-    async fn respond(&mut self, response: PluginResponse) -> () {
+    async fn respond(&mut self, response: PluginResponse) {
         let mut data = match serde_json::to_string(&response) {
             Ok(data) => data,
             Err(_) => {
@@ -84,7 +84,7 @@ async fn main() {
                 xdg_open(format!("notmuch://thread/{id}"));
                 plugin.responder.respond(PluginResponse::Close).await;
             }
-            Request::ActivateContext { id, context } => {
+            Request::ActivateContext { id: _, context: _ } => {
                 warn!("Ignoring activate context request");
             }
             Request::Complete(_) => {
@@ -133,7 +133,7 @@ impl NotmuchPlugin {
             }
         };
         info!("Received request with query {query}");
-        let query = match self.database.create_query(&query) {
+        let query = match self.database.create_query(query) {
             Ok(query) => query,
             Err(_) => {
                 warn!("Could not query notmuch database");
