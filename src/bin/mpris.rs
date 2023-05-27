@@ -79,7 +79,7 @@ enum Item {
 async fn main() {
     let mut requests = json_input_stream(async_stdin());
 
-    systemd_journal_logger::init().unwrap();
+    systemd::journal::JournalLog::init().unwrap();
     log::set_max_level(LevelFilter::Info);
     info!("Loaded pop launcher MPRIS integration");
 
