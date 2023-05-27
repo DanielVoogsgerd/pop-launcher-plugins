@@ -21,7 +21,7 @@ struct Config {
 
 #[tokio::main(flavor = "current_thread")]
 async fn main() {
-    systemd_journal_logger::init().unwrap();
+    systemd::journal::JournalLog::init().unwrap();
     log::set_max_level(LevelFilter::Info);
     info!("Loaded pop launcher kicad integration");
 
