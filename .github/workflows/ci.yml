@@ -15,7 +15,7 @@ jobs:
     steps:
       - run: sudo apt update
       - run: sudo apt install -y libdbus-1-dev pkg-config libsystemd-dev
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
@@ -39,7 +39,7 @@ jobs:
     steps:
       - run: sudo apt update
       - run: sudo apt install -y libdbus-1-dev pkg-config libsystemd-dev
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
@@ -55,7 +55,7 @@ jobs:
     name: Rustfmt
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
