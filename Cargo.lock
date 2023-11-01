@@ -121,8 +121,8 @@ dependencies = [
  "async-lock",
  "async-task",
  "atomic-waker",
- "fastrand",
- "futures-lite",
+ "fastrand 1.9.0",
+ "futures-lite 1.13.0",
  "log",
 ]
 
@@ -373,6 +373,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "fastrand"
+version = "2.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "25cbce373ec4653f1a01a31e8a5e5ec0c622dc27ff9c4e6606eefef5cbbed4a5"
+
+[[package]]
 name = "fnv"
 version = "1.0.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -465,7 +471,22 @@ version = "1.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "49a9d51ce47660b1e808d3c990b4709f2f415d928835a17dfd16991515c46bce"
 dependencies = [
- "fastrand",
+ "fastrand 1.9.0",
+ "futures-core",
+ "futures-io",
+ "memchr",
+ "parking",
+ "pin-project-lite",
+ "waker-fn",
+]
+
+[[package]]
+name = "futures-lite"
+version = "2.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9c1155db57329dca6d018b61e76b1488ce9a2e5e44028cac420a5898f4fcef63"
+dependencies = [
+ "fastrand 2.0.1",
  "futures-core",
  "futures-io",
  "memchr",
@@ -707,7 +728,7 @@ checksum = "1af92d2c48f1879d1e2bc4c2e6a9a09a2c19540f4823ef6c22fa772c0a6db5e6"
 dependencies = [
  "blocking",
  "const_format",
- "futures-lite",
+ "futures-lite 1.13.0",
  "serde",
  "serde_json",
  "serde_with",
@@ -721,7 +742,7 @@ dependencies = [
  "async-trait",
  "blocking",
  "colorsys",
- "futures-lite",
+ "futures-lite 2.0.0",
  "fuzzy-matcher",
  "home",
  "itertools",
